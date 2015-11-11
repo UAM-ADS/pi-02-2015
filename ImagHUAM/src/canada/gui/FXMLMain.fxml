@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="canada.gui.FXMLMainController">
+   <top>
+      <AnchorPane prefHeight="99.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Flag_of_Canada.png" />
+                     </image>
+                  </ImageView>
+                  <VBox>
+                     <children>
+                        <Label text="Equipe Canadá">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Sistema Imagiologia HUAM" />
+                        <Label fx:id="mainVersionLabel" text="versão 0.0.0" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </HBox>
+            <Label fx:id="helloLabel" layoutX="668.0" layoutY="15.0" text="Olá, Fulano de Tal" textAlignment="RIGHT" AnchorPane.rightAnchor="14.0" />
+            <Button fx:id="logoutBtn" layoutX="742.0" layoutY="66.0" mnemonicParsing="false" onAction="#logout" text="Sair" AnchorPane.rightAnchor="14.0" />
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Admin">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+            <Tab text="Atendente">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+          <Tab text="Profissional Saúde">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>
