@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="430.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="canada.gui.FXMLFuncionarioController">
+   <children>
+      <Label fx:id="adminFuncTitleLabel" layoutX="14.0" layoutY="14.0" text="Funcionário">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="funcNomeTxt" layoutX="14.0" layoutY="79.0" prefHeight="25.0" prefWidth="570.0" />
+      <Label layoutX="14.0" layoutY="64.0" text="Nome" />
+      <Label layoutX="14.0" layoutY="114.0" text="CPF:" />
+      <TextField fx:id="funcCpfTxt" layoutX="14.0" layoutY="129.0" prefHeight="25.0" prefWidth="273.0" />
+      <Label layoutX="311.0" layoutY="114.0" text="Email:" />
+      <TextField fx:id="funcEmailTxt" layoutX="311.0" layoutY="129.0" prefHeight="25.0" prefWidth="273.0" />
+      <Label layoutX="14.0" layoutY="164.0" text="Endereço:" />
+      <TextField fx:id="funcEndTxt" layoutX="14.0" layoutY="179.0" prefHeight="25.0" prefWidth="570.0" />
+      <Label layoutX="14.0" layoutY="214.0" text="Telefone:" />
+      <TextField fx:id="funcTelTxt" layoutX="14.0" layoutY="229.0" prefHeight="25.0" prefWidth="273.0" />
+      <Label layoutX="311.0" layoutY="214.0" text="Permissão:" />
+      <ChoiceBox fx:id="funcPermissaoChoice" layoutX="311.0" layoutY="229.0" prefHeight="25.0" prefWidth="273.0" />
+      <Label layoutX="14.0" layoutY="264.0" text="Login:" />
+      <TextField fx:id="funcLoginTxt" layoutX="14.0" layoutY="279.0" prefHeight="25.0" prefWidth="273.0" />
+      <Label layoutX="311.0" layoutY="264.0" text="Senha:" />
+      <PasswordField fx:id="funcPassTxt" layoutX="311.0" layoutY="279.0" prefHeight="25.0" prefWidth="273.0" />
+      <Label layoutX="14.0" layoutY="314.0" text="Registro:" />
+      <TextField fx:id="funcRegistroTxt" layoutX="14.0" layoutY="329.0" prefHeight="25.0" prefWidth="273.0" />
+      <Label layoutX="311.0" layoutY="314.0" text="Especialidade:" />
+      <TextField fx:id="funcEspecTxt" layoutX="311.0" layoutY="329.0" prefHeight="25.0" prefWidth="273.0" />
+      <Button fx:id="funcApagarBtn" layoutX="249.0" layoutY="411.0" mnemonicParsing="false" onAction="#funcApagar" text="Apagar" textFill="#a82727" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="funcCancelaBtn" layoutX="441.0" layoutY="397.0" mnemonicParsing="false" onAction="#funcCancela" text="Cancelar" AnchorPane.bottomAnchor="14.0" />
+      <Button fx:id="funcSalvaBtn" layoutX="469.0" layoutY="411.0" mnemonicParsing="false" onAction="#funcSalva" text="Salvar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+   </children>
+</AnchorPane>

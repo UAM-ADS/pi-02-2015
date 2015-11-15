@@ -5,12 +5,15 @@
  */
 package canada.utils;
 
+import java.text.ParseException;
+import javax.swing.text.MaskFormatter;
+
 /**
  *
  * @author mgaldieri
  */
 public class Helpers {
-    public Boolean validaCPF(String numeroCPF) {
+    public static Boolean validaCPF(String numeroCPF) {
         if (numeroCPF == null || numeroCPF.length() < 11) {
             return false;
         }
@@ -50,5 +53,11 @@ public class Helpers {
         } else {
             return false;
         }
+    }
+    
+    public static String formataCPF(String cpf) throws ParseException {
+        MaskFormatter mask = new MaskFormatter("###.###.###-##");
+        mask.setValueContainsLiteralCharacters(false);
+        return mask.valueToString(cpf);
     }
 }

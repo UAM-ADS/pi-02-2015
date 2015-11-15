@@ -29,13 +29,9 @@ public class Constants {
     }
     
     public enum TabIndex {
-        VENDA(0),
-        CLIENTE(1),
-        PRODUTO(2),
-        ESTOQUE(3),
-        FUNCIONARIO(4),
-        ADMIN(5),
-        SOBRE(6);
+        ADMIN(0),
+        ATENDENTE(1),
+        SAUDE(2);
         private int index;
         
         private TabIndex(int index) {
@@ -59,6 +55,25 @@ public class Constants {
         
         public int getRole() {
             return role;
+        }
+        
+        public String toString() {
+            String roleName;
+            switch (role) {
+                case 0:
+                    roleName = "Admin";
+                    break;
+                case 1:
+                    roleName = "Atendente";
+                    break;
+                case 2:
+                    roleName = "Saúde";
+                    break;
+                default:
+                    roleName = "Inexistente";
+                    break;
+            }
+            return roleName;
         }
     }
     

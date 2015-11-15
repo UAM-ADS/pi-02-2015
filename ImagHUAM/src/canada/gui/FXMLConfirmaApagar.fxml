@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="150.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="canada.gui.FXMLConfirmaApagarController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Atenção" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="54.0" text="Tem certeza que deseja remover esse funcionário?" />
+      <Button fx:id="funcConfirmaApagarBtn" layoutX="343.0" layoutY="111.0" mnemonicParsing="false" onAction="#funcConfirmaApagar" text="Sim" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+      <Button fx:id="funcCancelaApagar" cancelButton="true" defaultButton="true" layoutX="289.0" layoutY="111.0" mnemonicParsing="false" text="Nao" AnchorPane.bottomAnchor="14.0" />
+   </children>
+</AnchorPane>
