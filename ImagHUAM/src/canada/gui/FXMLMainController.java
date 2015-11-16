@@ -7,6 +7,8 @@ package canada.gui;
 
 import canada.utils.Constants;
 import canada.ConnectionManager;
+import canada.Paciente;
+import canada.PacienteManager;
 import canada.UserManager;
 import canada.User;
 import canada.gui.FuncionarioRow;
@@ -31,6 +33,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -50,7 +53,10 @@ public class FXMLMainController implements Initializable {
     private Connection conn;
     private User currentUser;
     private UserManager userManager;
+    private PacienteManager pacienteManager;
+    private SingleSelectionModel<Tab> selectionModel;
     private ObservableList<FuncionarioRow> adminFuncionarioList;
+    private ObservableList<PacienteRow> atendentePacienteList;
     
     @FXML
     private Label mainVersionLabel;
@@ -80,6 +86,20 @@ public class FXMLMainController implements Initializable {
     private TableColumn<FuncionarioRow, String> adminCpfColumn;
     @FXML
     private TableColumn<FuncionarioRow, String> adminPapelColumn;
+    @FXML
+    private TextField atendenteBuscaCpfTxt;
+    @FXML
+    private Button atendenteBuscaCpfBtn;
+    @FXML
+    private Button atendenteNovoBtn;
+    @FXML
+    private TableColumn<PacienteRow, String> atendenteNomeColumn;
+    @FXML
+    private TableColumn<PacienteRow, String> atendenteCpfColumn;
+    @FXML
+    private TableColumn<PacienteRow, String> atendenteCartaoColumn;
+    @FXML
+    private TableView<PacienteRow> atendentePacienteTable;
     
     @FXML
     private void logout(ActionEvent event) {
@@ -97,13 +117,18 @@ public class FXMLMainController implements Initializable {
         userManager = UserManager.gerenciador(conn);
         currentUser = userManager.getCurrentUser();
         
+        // Obter referência ao singleton gerenciador de pacientes
+        pacienteManager = PacienteManager.gerenciador();
+        
         helloLabel.setText("Olá, "+currentUser.getNome());
         
         // Libera as abas de acordo com as permissões do usuário
+        selectionModel = mainTabPane.getSelectionModel();
         switch (currentUser.getPapel()) {
             case ADMIN:
                 tabSaude.setDisable(true);
                 tabAtendente.setDisable(true);
+                selectionModel.select(tabAdmin);
                 try {
                     populateFuncTable();
                 } catch (SQLException e) {
@@ -113,10 +138,17 @@ public class FXMLMainController implements Initializable {
             case SAUDE:
                 tabAdmin.setDisable(true);
                 tabAtendente.setDisable(true);
+                selectionModel.select(tabSaude);
                 break;
             case ATENDENTE:
                 tabAdmin.setDisable(true);
                 tabSaude.setDisable(true);
+                selectionModel.select(tabAtendente);
+                try {
+                    populatePacienteTable();
+                } catch (SQLException e) {
+                    System.out.println("Erro ao preecher tabela de pacientes. "+e);
+                }
                 break;
         }
     }
@@ -162,6 +194,22 @@ public class FXMLMainController implements Initializable {
         User funcionario = userManager.buscaPorCPF(adminBuscaCpfTxt.getText());
         if (funcionario == null) {
             // Mostra o alerta de funcionario inexistente
+            try {
+                if (root == null) {
+                    root = (Stage) adminBuscaCpfBtn.getScene().getWindow();
+                }
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLInexistente.fxml"));
+                Scene inexistenteScene = new Scene(loader.load());
+                Stage inexistenteStage = new Stage();
+                inexistenteStage.initModality(Modality.APPLICATION_MODAL);
+                inexistenteStage.initOwner(root);
+                inexistenteStage.setScene(inexistenteScene);
+                FXMLInexistenteController inexistenteController = loader.<FXMLInexistenteController>getController();
+                inexistenteController.setStage(inexistenteStage);
+                inexistenteStage.show();
+            } catch (IOException e) {
+                System.out.println("Erro ao abrir janela de CPF inexistente. "+e);
+            }
         } else {
             try {
                 if (root == null) {
@@ -205,6 +253,95 @@ public class FXMLMainController implements Initializable {
             funcStage.show();
         } catch (IOException e) {
             System.out.println("Erro ao abrir janela para preenchimento de dados de funcionário. "+e);
+        }
+    }
+    
+    private void populatePacienteTable() throws SQLException {
+        atendenteNomeColumn.setCellValueFactory(new PropertyValueFactory<PacienteRow, String>("nome"));
+        atendenteCpfColumn.setCellValueFactory(new PropertyValueFactory<PacienteRow, String>("cpf"));
+        atendenteCartaoColumn.setCellValueFactory(new PropertyValueFactory<PacienteRow, String>("cartao"));
+        try {
+            reloadPacienteTable();
+        } catch (SQLException e) {
+            System.out.println("Erro carregando lista de pacientes. "+e);
+        }
+    }
+    
+    public void reloadPacienteTable() throws SQLException {
+        atendentePacienteList = FXCollections.observableArrayList();
+        String sql = "SELECT nome, cpf, cartao FROM Paciente";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        while (rs.next()) {
+            atendentePacienteList.add(new PacienteRow(rs.getString("nome"), rs.getString("cpf"), rs.getString("cartao")));
+            atendentePacienteTable.setItems(atendentePacienteList);
+        }
+    }
+
+    @FXML
+    private void atendenteBuscaPaciente(ActionEvent event) {
+        Paciente paciente = pacienteManager.buscaPorCpf(atendenteBuscaCpfTxt.getText());
+        if (paciente == null) {
+            // Mostra o alerta de paciente inexistente
+            try {
+                if (root == null) {
+                    root = (Stage) atendenteBuscaCpfBtn.getScene().getWindow();
+                }
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLInexistente.fxml"));
+                Scene inexistenteScene = new Scene(loader.load());
+                Stage inexistenteStage = new Stage();
+                inexistenteStage.initModality(Modality.APPLICATION_MODAL);
+                inexistenteStage.initOwner(root);
+                inexistenteStage.setScene(inexistenteScene);
+                FXMLInexistenteController inexistenteController = loader.<FXMLInexistenteController>getController();
+                inexistenteController.setStage(inexistenteStage);
+                inexistenteStage.show();
+            } catch (IOException e) {
+                System.out.println("Erro ao abrir janela de CPF inexistente. "+e);
+            }
+        } else {
+            try {
+                if (root == null) {
+                    root = (Stage) atendenteBuscaCpfBtn.getScene().getWindow();
+                }
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLPaciente.fxml"));
+                Scene pacienteScene = new Scene(loader.load());
+                Stage pacienteStage = new Stage();
+                pacienteStage.initModality(Modality.WINDOW_MODAL);
+                pacienteStage.initOwner(root);
+                pacienteStage.setScene(pacienteScene);
+                FXMLPacienteController pacienteController = loader.<FXMLPacienteController>getController();
+                pacienteController.setStage(pacienteStage);
+                pacienteController.setUser(paciente);
+                pacienteController.setIsEditing(true);
+                pacienteController.setCaller(this);
+                pacienteStage.show();
+            } catch (IOException e) {
+                System.out.println("Erro ao abrir janela para preenchimento de dados de paciente. "+e);
+            }
+        }
+    }
+
+    @FXML
+    private void atendenteNovoPaciente(ActionEvent event) {
+        // Carrega a janela para preenchimento dos dados de paciente
+        try {
+            if (root == null) {
+                root = (Stage) atendenteNovoBtn.getScene().getWindow();
+            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLPaciente.fxml"));
+            Scene pacienteScene = new Scene(loader.load());
+            Stage pacienteStage = new Stage();
+            pacienteStage.initModality(Modality.WINDOW_MODAL);
+            pacienteStage.initOwner(root);
+            pacienteStage.setScene(pacienteScene);
+            FXMLPacienteController pacienteController = loader.<FXMLPacienteController>getController();
+            pacienteController.setStage(pacienteStage);
+            pacienteController.setIsEditing(false);
+            pacienteController.setCaller(this);
+            pacienteStage.show();
+        } catch (IOException e) {
+            System.out.println("Erro ao abrir janela para preenchimento de dados de paciente. "+e);
         }
     }
     

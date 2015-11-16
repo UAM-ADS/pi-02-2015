@@ -64,16 +64,46 @@ public class Constants {
                     roleName = "Admin";
                     break;
                 case 1:
-                    roleName = "Atendente";
+                    roleName = "Saúde";
                     break;
                 case 2:
-                    roleName = "Saúde";
+                    roleName = "Atendente";
                     break;
                 default:
                     roleName = "Inexistente";
                     break;
             }
             return roleName;
+        }
+    }
+    
+    public enum Sexo {
+        MASCULINO(0),
+        FEMININO(1);
+        private int sexo;
+        
+        private Sexo(int sexo) {
+            this.sexo = sexo;
+        }
+        
+        public int getSexo() {
+            return sexo;
+        }
+        
+        public String toString() {
+            String sexoString;
+            switch (sexo) {
+                case 0:
+                    sexoString = "Masculino";
+                    break;
+                case 1:
+                    sexoString = "Feminino";
+                    break;
+                default:
+                    sexoString = "Inexistente";
+                    break;
+            }
+            return sexoString;
         }
     }
     

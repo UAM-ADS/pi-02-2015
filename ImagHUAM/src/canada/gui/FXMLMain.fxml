@@ -56,7 +56,7 @@
                         <TextField fx:id="adminBuscaCpfTxt" layoutX="14.0" layoutY="29.0" prefHeight="25.0" prefWidth="450.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="29.0" />
                         <Button fx:id="adminBuscaCpfBtn" layoutX="474.0" layoutY="29.0" mnemonicParsing="false" onAction="#adminBuscaFunc" text="Buscar" AnchorPane.leftAnchor="474.0" AnchorPane.topAnchor="29.0" />
                         <Button fx:id="adminNovoBtn" layoutX="623.0" layoutY="29.0" mnemonicParsing="false" onAction="#adminNovoFunc" text="Cadastrar Novo" AnchorPane.rightAnchor="14.0" />
-                        <TableView fx:id="adminFuncTable" layoutX="14.0" layoutY="64.0" prefHeight="326.0" prefWidth="739.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="64.0">
+                        <TableView fx:id="adminFuncTable" layoutX="14.0" layoutY="64.0" prefHeight="325.0" prefWidth="740.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="64.0">
                           <columns>
                             <TableColumn fx:id="adminNomeColumn" minWidth="300.0" prefWidth="400.0" text="Nome" />
                             <TableColumn fx:id="adminCpfColumn" minWidth="150.0" prefWidth="200.0" text="CPF" />
@@ -68,7 +68,20 @@
           </Tab>
             <Tab fx:id="tabAtendente" text="Atendente">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="14.0" text="Buscar paciente por CPF:" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+                        <TextField fx:id="atendenteBuscaCpfTxt" layoutX="14.0" layoutY="29.0" prefHeight="25.0" prefWidth="450.0" AnchorPane.leftAnchor="14.0" />
+                        <Button fx:id="atendenteBuscaCpfBtn" layoutX="474.0" layoutY="29.0" mnemonicParsing="false" onAction="#atendenteBuscaPaciente" text="Buscar" AnchorPane.leftAnchor="474.0" AnchorPane.topAnchor="29.0" />
+                        <Button fx:id="atendenteNovoBtn" layoutX="633.0" layoutY="29.0" mnemonicParsing="false" onAction="#atendenteNovoPaciente" text="Cadastrar Novo" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="29.0" />
+                        <TableView fx:id="atendentePacienteTable" layoutX="14.0" layoutY="64.0" prefHeight="325.0" prefWidth="740.0" AnchorPane.leftAnchor="14.0">
+                          <columns>
+                            <TableColumn fx:id="atendenteNomeColumn" minWidth="300.0" prefWidth="340.0" text="Nome" />
+                            <TableColumn fx:id="atendenteCpfColumn" minWidth="150.0" prefWidth="200.0" text="CPF" />
+                              <TableColumn fx:id="atendenteCartaoColumn" minWidth="150.0" prefWidth="200.0" text="Cartão" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
               </content>
             </Tab>
           <Tab fx:id="tabSaude" text="Profissional Saúde">

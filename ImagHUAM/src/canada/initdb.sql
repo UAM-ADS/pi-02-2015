@@ -23,7 +23,7 @@ cpf varchar(24),
 endereco varchar(120),
 telefone varchar(12),
 email varchar(120),
-sexo varchar(10),
+sexo int,
 cartao varchar(64),
 criado_em datetime DEFAULT CURRENT_TIMESTAMP()
 );
